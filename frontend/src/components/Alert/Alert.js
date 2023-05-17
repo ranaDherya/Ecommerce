@@ -1,9 +1,13 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { clearErrors } from "../../store/actions/product-actions";
 
 import "./Alert.css";
 
 export default function Alert({ children, type, message }) {
   const [isShow, setIsShow] = useState(true);
+
+  const dispatch = useDispatch();
 
   const renderElAlert = function () {
     return React.cloneElement(children);
@@ -12,6 +16,7 @@ export default function Alert({ children, type, message }) {
   const handleClose = (e) => {
     e.preventDefault();
     setIsShow(false);
+    dispatch(clearErrors());
   };
 
   const css = `alert ${type} ${!isShow ? "hide" : ""}`;

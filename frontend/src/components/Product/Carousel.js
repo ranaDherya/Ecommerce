@@ -20,14 +20,14 @@ function Carousel(props) {
     pauseOnHover: true,
     swipeToSlide: true,
   };
-  const imgs = props.images.map((img) => (
+  const images = props.images.map((img) => (
     <div className="wrapper" key={img._id}>
-      <img src={img.url} />
+      <img src={img.url} alt="" />
     </div>
   ));
   return (
     <Slider className="carousel" {...settings}>
-      {imgs}
+      {images}
     </Slider>
   );
 }

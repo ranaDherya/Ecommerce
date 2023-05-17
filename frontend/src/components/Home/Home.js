@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { CgMouse } from "react-icons/cg";
-import Product from "./Product";
+import ProductCard from "../Product/ProductCard";
 import MetaData from "../layout/MetaData";
 import { getProducts } from "../../store/actions/product-actions";
 import { useSelector, useDispatch } from "react-redux";
@@ -11,9 +11,7 @@ import Alert from "../Alert/Alert";
 
 function Home() {
   const dispatch = useDispatch();
-  const { loading, products, productsCounter, error } = useSelector(
-    (state) => state.product
-  );
+  const { loading, products, error } = useSelector((state) => state.product);
 
   useEffect(() => {
     dispatch(getProducts());
@@ -42,7 +40,9 @@ function Home() {
 
           <div id="container" className="container">
             {products &&
-              products.map((product) => <Product product={product} />)}
+              products.map((product) => (
+                <ProductCard product={product} key={product._id} />
+              ))}
           </div>
         </>
       )}

@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import ReactStars from "react-rating-stars-component";
 
-function Product(props) {
+function ProductCard(props) {
   const options = {
     edit: false,
     color: "rgba(20, 20, 20, 0.1)",
@@ -25,4 +25,4 @@ function Product(props) {
   );
 }
 
-export default Product;
+export default ProductCard;

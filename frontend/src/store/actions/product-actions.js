@@ -4,17 +4,24 @@ import {
 } from "../reducers/product-slice";
 import axios from "axios";
 
-export const getProducts = () => {
+export const getProducts = (
+  keyword = "",
+  currentPage = 1,
+  price = [0, 25000]
+) => {
   return async (dispatch) => {
     try {
       dispatch(productActions.productRequest());
 
-      const { data } = await axios.get("/api/v1/products");
+      let link = `/api/v1/products?keyword=${keyword}&page=${currentPage}&price[gte]=${price[0]}&price[lte]=${price[1]}`;
+      const { data } = await axios.get(link);
 
       dispatch(
         productActions.productSuccess({
           products: data.products,
-          productsCount: data.productCount,
+          productsCount: data.productsCount,
+          resultsPerPage: data.resultsPerPage,
+          filteredProductsCount: data.filteredProductsCount,
         })
       );
     } catch (error) {

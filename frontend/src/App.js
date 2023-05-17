@@ -5,6 +5,9 @@ import React from "react";
 import Footer from "./components/layout/Footer/Footer";
 import Home from "./components/Home/Home";
 import ProductDetail from "./components/Product/ProductDetail";
+import Search from "./components/Product/Search";
+import LoginSignUp from "./components/User/LoginSignUp";
+import Products from "./components/Product/Products";
 
 import "./App.css";
 
@@ -24,6 +27,10 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/product/:id" element={<ProductDetail />} />
+        <Route path="/products" element={<Products />} />
+        <Route path="/products/:keyword" element={<Products />} />
+        <Route path="/search" element={<Search />} />
+        <Route path="/login" element={<LoginSignUp />} />
       </Routes>
 
       <Footer />
