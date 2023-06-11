@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { clearErrors } from "../../store/actions/product-actions";
+// import { clearErrors } from "../../store/actions/product-actions";
+// import { clearErrors } from "../../store/actions/user-actions";
 
 import "./Alert.css";
 
-export default function Alert({ children, type, message }) {
+export default function Alert({ children, type, message, clearErrors }) {
   const [isShow, setIsShow] = useState(true);
 
   const dispatch = useDispatch();

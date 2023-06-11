@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
-import { getProducts } from "../../store/actions/product-actions";
+import { clearErrors, getProducts } from "../../store/actions/product-actions";
 import Loader from "../layout/Loader/Loader";
 import ProductCard from "./ProductCard";
 import Pagination from "../layout/Pagination/Pagination";
@@ -48,7 +48,9 @@ function Products(props) {
   console.log(resultsPerPage);
   return (
     <>
-      {error && <Alert message={error} type="error" />}
+      {error && (
+        <Alert message={error} type="error" clearErrors={clearErrors} />
+      )}
       {loading ? (
         <Loader />
       ) : (
