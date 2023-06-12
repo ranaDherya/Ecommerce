@@ -1,6 +1,8 @@
 const app = require("./app");
 const path = require("path");
 
+const cloudinary = require("cloudinary");
+
 const dotenv = require("dotenv");
 const connectDatabase = require("./db/database");
 
@@ -17,6 +19,12 @@ dotenv.config({ path: path.resolve(__dirname, "./config/config.env") });
 
 // Connecting to database
 connectDatabase();
+
+cloudinary.config({ 
+  cloud_name: process.env.Cloudinary_Name, 
+  api_key: process.env.Cloudinary_API_KEY, 
+  api_secret: process.env.Cloudinary_API_SECRET,
+});
 
 const server = app.listen(process.env.PORT, () =>
   console.log(`Server is running on: http://localhost:${process.env.PORT}`)

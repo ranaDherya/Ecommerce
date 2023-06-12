@@ -4,10 +4,10 @@ import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import LockOpenIcon from "@mui/icons-material/LockOpen";
 import FaceIcon from "@mui/icons-material/Face";
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { useDispatch, useSelector } from "react-redux";
-import { clearErrors, login } from "../../store/actions/user-actions";
+import { clearErrors, login, register } from "../../store/actions/user-actions";
 
 import Alert from "../Alert/Alert";
 import Loader from "../layout/Loader/Loader";
@@ -15,6 +15,9 @@ import Loader from "../layout/Loader/Loader";
 import "./LoginSignUp.css";
 
 function LoginSignUp() {
+  
+  const navigate = useNavigate();
+
   const dispatch = useDispatch();
   const { error, loading, isAuthenticated } = useSelector(
     (state) => state.user
@@ -36,7 +39,7 @@ function LoginSignUp() {
   const { name, email, password } = user;
 
   const [avatar, setAvatar] = useState();
-  const [avatarPreview, setAvatarPreview] = useState("../../images/top1.jpg");
+  const [avatarPreview, setAvatarPreview] = useState("https://res.cloudinary.com/dmnjtpuzu/image/upload/v1686561110/Ecommerce/avatars/default_avatar_ombzaz.png");
 
   const loginSubmitHandler = (event) => {
     event.preventDefault();
@@ -52,8 +55,7 @@ function LoginSignUp() {
     myForm.set("email", email);
     myForm.set("password", password);
     myForm.set("avatar", avatar);
-
-    console.log("Register Form submitted");
+    dispatch(register(myForm));
   };
 
   const registerDataChange = (e) => {
@@ -66,6 +68,8 @@ function LoginSignUp() {
           setAvatar(reader.result);
         }
       };
+
+      reader.readAsDataURL(e.target.files[0]);
     } else {
       setUser({ ...user, [e.target.name]: e.target.value });
     }
@@ -80,10 +84,10 @@ function LoginSignUp() {
         </>
       );
     }
-    // if (isAuthenticated) {
-    //   history.push("/account");
-    // }
-  }, [error]);
+    if (isAuthenticated) {
+      navigate("/account");
+    }
+  }, [error, isAuthenticated]);
 
   const switchTabs = (e, tab) => {
     if (tab === "login") {
