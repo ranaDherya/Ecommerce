@@ -17,15 +17,19 @@ export default function Alert({ children, type, message, clearErrors }) {
   const handleClose = (e) => {
     e.preventDefault();
     setIsShow(false);
-    dispatch(clearErrors());
+    if (clearErrors) {
+      dispatch(clearErrors());
+    }
   };
 
   const css = `alert ${type} ${!isShow ? "hide" : ""}`;
-
-  let err = "";
-  for (let i = 6; i < message.length - 1; i++) {
-    if (message.charAt(i) + message.charAt(i + 1) === "at") break;
-    err += message.charAt(i);
+  let msg = message;
+  if (type === "error") {
+    msg = "";
+    for (let i = 6; i < message.length - 1; i++) {
+      if (message.charAt(i) + message.charAt(i + 1) === "at") break;
+      msg += message.charAt(i);
+    }
   }
 
   return (
@@ -33,7 +37,7 @@ export default function Alert({ children, type, message, clearErrors }) {
       <span className="closebtn" onClick={handleClose}>
         &times;
       </span>
-      {children ? renderElAlert() : err}
+      {children ? renderElAlert() : msg}
     </div>
   );
 }

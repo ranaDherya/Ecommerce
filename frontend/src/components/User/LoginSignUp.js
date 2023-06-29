@@ -15,7 +15,6 @@ import Loader from "../layout/Loader/Loader";
 import "./LoginSignUp.css";
 
 function LoginSignUp() {
-  
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
@@ -39,7 +38,9 @@ function LoginSignUp() {
   const { name, email, password } = user;
 
   const [avatar, setAvatar] = useState();
-  const [avatarPreview, setAvatarPreview] = useState("https://res.cloudinary.com/dmnjtpuzu/image/upload/v1686561110/Ecommerce/avatars/default_avatar_ombzaz.png");
+  const [avatarPreview, setAvatarPreview] = useState(
+    "https://res.cloudinary.com/dmnjtpuzu/image/upload/v1686561110/Ecommerce/avatars/default_avatar_ombzaz.png"
+  );
 
   const loginSubmitHandler = (event) => {
     event.preventDefault();
@@ -75,19 +76,11 @@ function LoginSignUp() {
     }
   };
 
-  let preRender = <></>;
   useEffect(() => {
-    if (error) {
-      preRender = (
-        <>
-          <Alert message={error} type="error" clearErrors={clearErrors} />
-        </>
-      );
-    }
     if (isAuthenticated) {
       navigate("/account");
     }
-  }, [error, isAuthenticated]);
+  }, [isAuthenticated, navigate]);
 
   const switchTabs = (e, tab) => {
     if (tab === "login") {
@@ -110,7 +103,9 @@ function LoginSignUp() {
         <Loader />
       ) : (
         <>
-          {preRender}
+          {error && (
+            <Alert message={error} type="error" clearErrors={clearErrors} />
+          )}
           <div className="LoginSignUpContainer">
             <div className="LoginSignUpBox">
               <div>
