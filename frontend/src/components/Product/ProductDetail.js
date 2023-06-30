@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Carousel from "./Carousel";
 import { useSelector, useDispatch } from "react-redux";
 import { getProductDetail } from "../../store/actions/product-actions";
@@ -7,14 +7,30 @@ import ReviewCard from "./ReviewCard";
 import { useParams } from "react-router-dom";
 import Loader from "../layout/Loader/Loader";
 import Alert from "../Alert/Alert";
+import { addItemToCart } from "../../store/actions/cart-actions";
 
 import "./ProductDetail.css";
 
 function ProductDetail() {
+  const [quantity, setQuantity] = useState(1);
+  const dispatch = useDispatch();
   const params = useParams();
   const { id } = params;
 
-  const dispatch = useDispatch();
+  const increaseQuantity = () => {
+    if (product.Stock <= quantity) return;
+    setQuantity(quantity + 1);
+  };
+
+  const decreaseQuantity = () => {
+    if (quantity === 1) return;
+    setQuantity(quantity - 1);
+  };
+
+  const addToCartHandler = () => {
+    dispatch(addItemToCart(id, quantity));
+  };
+
   const { loading, product, error } = useSelector(
     (state) => state.productDetail
   );
@@ -58,11 +74,11 @@ function ProductDetail() {
                 <h1>&#x20b9;{product.price}</h1>
                 <div className="div3-1">
                   <div>
-                    <button>-</button>
-                    <input defaultValue="1" type="number" />
-                    <button>+</button>
+                    <button onClick={decreaseQuantity}>-</button>
+                    <input type="number" readOnly value={quantity} />
+                    <button onClick={increaseQuantity}>+</button>
                   </div>
-                  <button>Add to Cart</button>
+                  <button onClick={addToCartHandler}>Add to Cart</button>
                 </div>
                 <p>
                   Status:

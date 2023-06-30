@@ -1,5 +1,5 @@
 import axios from "axios";
-import { userActions } from "../reducers/user-slice";
+import { forgotPasswordActions, userActions } from "../reducers/user-slice";
 
 // Login User
 export const login = (email, password) => {
@@ -129,6 +129,62 @@ export const updatePassword = (password) => {
     } catch (error) {
       dispatch(
         userActions.updatePasswordFail({
+          error: error.response.data.message,
+        })
+      );
+    }
+  };
+};
+
+// Forgot Password
+export const forgotPassword = (email) => {
+  return async (dispatch) => {
+    try {
+      dispatch(forgotPasswordActions.forgotPasswordRequest());
+
+      const config = {
+        headers: { "Content-Type": "application/json" },
+      };
+
+      const { data } = await axios.post(
+        `/api/v1/password/forgot`,
+        email,
+        config
+      );
+
+      dispatch(
+        forgotPasswordActions.forgotPasswordSuccess({ message: data.message })
+      );
+    } catch (error) {
+      dispatch(
+        forgotPasswordActions.forgotPasswordFail({
+          error: error.response.data.message,
+        })
+      );
+    }
+  };
+};
+
+//Reset Password
+export const resetPassword = (token, passwords) => {
+  return async (dispatch) => {
+    try {
+      dispatch(forgotPasswordActions.resetPasswordRequest());
+
+      const config = { headers: { "Content-Type": "application/json" } };
+
+      const { data } = await axios.put(
+        `api/v1/password/reset/${token}`,
+        passwords,
+        config
+      );
+
+      dispatch(
+        forgotPasswordActions.resetPasswordSuccess({ success: data.success })
+      );
+    } catch (error) {
+      dispatch(
+        forgotPasswordActions.resetPasswordFail({
           error: error.response.data.message,
         })
       );

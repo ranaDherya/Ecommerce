@@ -3,7 +3,7 @@ import MetaData from "../layout/MetaData";
 import { Link } from "react-router-dom";
 import Loader from "../layout/Loader/Loader";
 import { useSelector } from "react-redux";
-import { useNavigate, Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./Profile.css";
 
 function Profile() {
@@ -11,14 +11,10 @@ function Profile() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!isAuthenticated) {
-      return <Navigate to="/login" />;
+    if (isAuthenticated === false) {
+      navigate("/login");
     }
-  }, [isAuthenticated]);
-
-  if (!isAuthenticated) {
-    navigate("/login");
-  }
+  }, [isAuthenticated, navigate]);
 
   return (
     <>

@@ -19,6 +19,7 @@ export default function Alert({ children, type, message, clearErrors }) {
     setIsShow(false);
     if (clearErrors) {
       dispatch(clearErrors());
+      clearErrors();
     }
   };
 

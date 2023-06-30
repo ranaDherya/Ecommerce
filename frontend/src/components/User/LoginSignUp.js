@@ -4,7 +4,7 @@ import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import LockOpenIcon from "@mui/icons-material/LockOpen";
 import FaceIcon from "@mui/icons-material/Face";
 
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 
 import { useDispatch, useSelector } from "react-redux";
 import { clearErrors, login, register } from "../../store/actions/user-actions";
@@ -21,6 +21,9 @@ function LoginSignUp() {
   const { error, loading, isAuthenticated } = useSelector(
     (state) => state.user
   );
+  // const location = useLocation();
+  // const redirect = location.search ? location.search.split("=")[1] : "/account";
+  const [redirect, setRedirect] = useSearchParams();
 
   const loginTab = useRef(null);
   const registerTab = useRef(null);
@@ -78,9 +81,14 @@ function LoginSignUp() {
 
   useEffect(() => {
     if (isAuthenticated) {
-      navigate("/account");
+      console.log(redirect);
+      navigate(
+        redirect.toString().split("=")[1] !== undefined
+          ? `/${redirect.toString().split("=")[1]}`
+          : "/account"
+      );
     }
-  }, [isAuthenticated, navigate]);
+  }, [isAuthenticated, navigate, redirect]);
 
   const switchTabs = (e, tab) => {
     if (tab === "login") {

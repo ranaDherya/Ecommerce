@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 export const userSlice = createSlice({
   name: "user",
   initialState: {
-    user: null,
+    user: {},
     loading: false,
     isAuthenticated: false,
     error: null,
@@ -67,7 +67,7 @@ export const userSlice = createSlice({
     logoutUserSuccess(state) {
       state.loading = false;
       state.isAuthenticated = false;
-      state.user = null;
+      state.user = {};
     },
 
     logoutUserFail(state, action) {
@@ -120,4 +120,48 @@ export const userSlice = createSlice({
   },
 });
 
+export const forgotPasswordSlice = createSlice({
+  name: "forgotPassword",
+  initialState: {
+    loading: false,
+    error: null,
+    message: false,
+    success: false,
+  },
+  reducers: {
+    forgotPasswordRequest(state) {
+      state.loading = true;
+      state.error = null;
+    },
+
+    forgotPasswordSuccess(state, action) {
+      state.loading = false;
+      state.message = action.payload;
+    },
+
+    forgotPasswordFail(state, action) {
+      state.loading = false;
+      state.error = action.payload.error;
+    },
+    resetPasswordRequest(state) {
+      state.loading = true;
+      state.error = null;
+    },
+
+    resetPasswordSuccess(state, action) {
+      state.loading = false;
+      state.success = action.payload;
+    },
+
+    resetPasswordFail(state, action) {
+      state.loading = false;
+      state.error = action.payload.error;
+    },
+    clearErrors(state, action) {
+      state.error = null;
+    },
+  },
+});
+
 export const userActions = userSlice.actions;
+export const forgotPasswordActions = forgotPasswordSlice.actions;
