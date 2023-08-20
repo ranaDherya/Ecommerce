@@ -7,7 +7,7 @@ const sendEmail = async (options) => {
   const client = new MailtrapClient({ endpoint: ENDPOINT, token: TOKEN });
 
   const sender = {
-    email: "trikutaseeds@trikutaseeds.com",
+    email: process.env.SMTP_EMAIL,
     name: "Trikuta Seeds",
   };
 
