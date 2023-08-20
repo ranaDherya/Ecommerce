@@ -2,9 +2,33 @@ const Product = require("../models/productModel");
 const ErrorHandler = require("../utils/errorhandler");
 const catchAsyncErrors = require("../middleware/catchAsyncErrors");
 const ApiFeatures = require("../utils/apifeatures");
+const cloudinary = require("cloudinary");
 
 // Create Product -- Admin
 exports.createProduct = catchAsyncErrors(async (req, res, next) => {
+  let images = [];
+
+  if (typeof req.body.images === "string") {
+    // If only one images is there
+    images.push(req.body.images);
+  } else {
+    // If multiple images
+    images = req.body.images;
+  }
+
+  const imagesLink = [];
+
+  for (let i = 0; i < images.length; i++) {
+    const result = await cloudinary.v2.uploader.upload(images[i], {
+      folder: "Ecommerce/products",
+    });
+
+    imagesLink.push({
+      public_id: result.public_id,
+      url: result.secure_url,
+    });
+  }
+  req.body.images = imagesLink;
   req.body.user = req.user.id;
 
   const product = await Product.create(req.body);
@@ -17,7 +41,6 @@ exports.createProduct = catchAsyncErrors(async (req, res, next) => {
 
 // Get All Products
 exports.getAllProducts = catchAsyncErrors(async (req, res, next) => {
-  // return next(new ErrorHandler("Bhery Dangerous Error!!!", 500));
   const resultsPerPage = 8;
   const productsCount = await Product.countDocuments();
 
@@ -41,6 +64,16 @@ exports.getAllProducts = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
+// Get Admin Products -- Admin
+exports.getAdminProducts = catchAsyncErrors(async (req, res, next) => {
+  const products = await Product.find();
+
+  res.status(200).json({
+    success: true,
+    products,
+  });
+});
+
 // Get Product Details
 exports.getProductDetails = catchAsyncErrors(async (req, res, next) => {
   const product = await Product.findById(req.params.id);
@@ -57,10 +90,40 @@ exports.getProductDetails = catchAsyncErrors(async (req, res, next) => {
 
 // Update Product -- Admin
 exports.updateProduct = catchAsyncErrors(async (req, res) => {
-  let product = Product.findById(req.params.id);
+  let product = await Product.findById(req.params.id);
 
   if (!product) {
     return next(new ErrorHandler("Product not found", 404));
+  }
+  let images = [];
+  if (typeof req.body.images === "string") {
+    // If only one images is there
+    images.push(req.body.images);
+  } else {
+    // If multiple images
+    images = req.body.images;
+  }
+
+  if (images !== undefined) {
+    // Deleting old images
+    for (let i = 0; i < product.images.length; i++) {
+      await cloudinary.v2.uploader.destroy(product.images[i].public_id);
+    }
+
+    // updating new images
+    const imagesLink = [];
+    for (let i = 0; i < images.length; i++) {
+      const result = await cloudinary.v2.uploader.upload(images[i], {
+        folder: "Ecommerce/products",
+      });
+
+      imagesLink.push({
+        public_id: result.public_id,
+        url: result.secure_url,
+      });
+    }
+
+    req.body.images = imagesLink;
   }
 
   product = await Product.findByIdAndUpdate(req.params.id, req.body, {
@@ -75,13 +138,18 @@ exports.updateProduct = catchAsyncErrors(async (req, res) => {
   });
 });
 
-// Delete Product --
+// Delete Product -- Admin
 
 exports.deleteProduct = catchAsyncErrors(async (req, res) => {
   const product = await Product.findById(req.params.id);
 
   if (!product) {
     return next(new ErrorHandler("Product not found", 404));
+  }
+
+  // Deleting Images from cloudinary
+  for (let i = 0; i < product.images.length; i++) {
+    await cloudinary.v2.uploader.destroy(product.images[i].public_id);
   }
 
   await product.remove();
@@ -168,17 +236,22 @@ exports.deleteReview = catchAsyncErrors(async (req, res, next) => {
   );
   let numOfReviews = reviews.length;
 
-  let avgRating = 0;
+  let rating = 0;
   reviews.forEach((data) => {
-    avgRating += data.rating;
+    rating += data.rating;
   });
-  avgRating = avgRating / reviews.length;
+
+  if (reviews.length === 0) {
+    rating = 0;
+  } else {
+    rating = rating / reviews.length;
+  }
 
   await Product.findByIdAndUpdate(
     req.query.productId,
     {
       reviews,
-      rating: avgRating,
+      rating,
       numOfReviews,
     },
     {

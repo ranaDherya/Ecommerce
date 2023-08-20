@@ -18,7 +18,7 @@ function Profile() {
 
   return (
     <>
-      {loading ? (
+      {!isAuthenticated || loading ? (
         <Loader />
       ) : (
         <>

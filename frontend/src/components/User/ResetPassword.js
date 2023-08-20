@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import Loader from "../layout/Loader/Loader";
 import { useDispatch, useSelector } from "react-redux";
-import { clearErrors, resetPassword } from "../../store/actions/user-actions";
+import { resetPassword } from "../../store/actions/user-actions";
 import MetaData from "../layout/MetaData";
 import LockOpenIcon from "@mui/icons-material/LockOpen";
 import LockIcon from "@mui/icons-material/Lock";
 import { useNavigate, useParams } from "react-router-dom";
 import Alert from "../Alert/Alert";
+import { forgotPasswordActions } from "../../store/reducers/user-slice";
+
 import "./ResetPassword.css";
 
 function ResetPassword() {
@@ -40,13 +42,21 @@ function ResetPassword() {
       ) : (
         <>
           {error && (
-            <Alert type="error" message={error} clearErrors={clearErrors} />
+            <Alert
+              type="error"
+              message={error}
+              onClose={(e) => {
+                dispatch(forgotPasswordActions.clearErrors());
+              }}
+            />
           )}
           {success && (
             <Alert
               type="success"
-              message={"Password Updated Successfully"}
-              clearErrors={() => navigate("/login")}
+              message={"Password Updated Successfully."}
+              onClose={(e) => {
+                navigate("/login");
+              }}
             />
           )}
           <MetaData title="Change Password" />

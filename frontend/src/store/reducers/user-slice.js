@@ -136,12 +136,16 @@ export const forgotPasswordSlice = createSlice({
 
     forgotPasswordSuccess(state, action) {
       state.loading = false;
-      state.message = action.payload;
+      state.message = action.payload.message;
     },
 
     forgotPasswordFail(state, action) {
       state.loading = false;
       state.error = action.payload.error;
+    },
+    forgotPasswordReset(state) {
+      state.message = "";
+      state.success = false;
     },
     resetPasswordRequest(state) {
       state.loading = true;
@@ -150,7 +154,7 @@ export const forgotPasswordSlice = createSlice({
 
     resetPasswordSuccess(state, action) {
       state.loading = false;
-      state.success = action.payload;
+      state.success = action.payload.success;
     },
 
     resetPasswordFail(state, action) {
@@ -163,5 +167,94 @@ export const forgotPasswordSlice = createSlice({
   },
 });
 
+export const allUsersSlice = createSlice({
+  name: "allUsers",
+  initialState: {
+    users: [],
+    loading: false,
+    error: null,
+  },
+  reducers: {
+    allUsersRequest(state) {
+      state.loading = true;
+    },
+    allUsersSuccess(state, action) {
+      state.loading = false;
+      state.users = action.payload.users;
+    },
+    allUsersFail(state, action) {
+      state.loading = false;
+      state.error = action.payload.error;
+    },
+    clearErrors(state) {
+      state.error = null;
+    },
+  },
+});
+
+export const userDetailsSlice = createSlice({
+  name: "userDetails",
+  initialState: {
+    user: {},
+    loading: false,
+    error: null,
+  },
+  reducers: {
+    userDetailsRequest(state) {
+      state.loading = true;
+    },
+    userDetailsSuccess(state, action) {
+      state.loading = false;
+      state.user = action.payload.user;
+    },
+    userDetailsFail(state, action) {
+      state.loading = false;
+      state.error = action.payload.error;
+    },
+    clearErrors(state) {
+      state.error = null;
+    },
+  },
+});
+
+export const updateDeleteUserSlice = createSlice({
+  name: "updateDeleteUser",
+  initialState: {
+    loading: false,
+    isUpdated: false,
+    isDeleted: false,
+  },
+  reducers: {
+    updateDeleteUserRequest(state) {
+      state.loading = true;
+    },
+    updateDeleteUserFail(state, action) {
+      state.loading = false;
+      state.error = action.payload.error;
+    },
+    updateUserSuccess(state, action) {
+      state.loading = false;
+      state.isUpdated = action.payload.success;
+    },
+    deleteUserSuccess(state, action) {
+      state.loading = false;
+      state.isDeleted = action.payload.success;
+      state.message = action.payload.message;
+    },
+    updateUserReset(state) {
+      state.loading = false;
+      state.isUpdated = false;
+    },
+    deleteUserReset(state) {
+      state.loading = false;
+      state.message = null;
+      state.isDeleted = false;
+    },
+  },
+});
+
 export const userActions = userSlice.actions;
 export const forgotPasswordActions = forgotPasswordSlice.actions;
+export const allUsersActions = allUsersSlice.actions;
+export const updateDeleteUserActions = updateDeleteUserSlice.actions;
+export const userDetailsActions = userDetailsSlice.actions;

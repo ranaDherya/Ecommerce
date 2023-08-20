@@ -1,29 +1,24 @@
 import React, { useEffect, useRef, useState } from "react";
-
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import LockOpenIcon from "@mui/icons-material/LockOpen";
 import FaceIcon from "@mui/icons-material/Face";
-
-import { Link, useNavigate, useSearchParams } from "react-router-dom";
-
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { clearErrors, login, register } from "../../store/actions/user-actions";
-
+import { login, register } from "../../store/actions/user-actions";
 import Alert from "../Alert/Alert";
 import Loader from "../layout/Loader/Loader";
+import { userActions } from "../../store/reducers/user-slice";
 
 import "./LoginSignUp.css";
 
 function LoginSignUp() {
   const navigate = useNavigate();
-
   const dispatch = useDispatch();
+
   const { error, loading, isAuthenticated } = useSelector(
     (state) => state.user
   );
-  // const location = useLocation();
-  // const redirect = location.search ? location.search.split("=")[1] : "/account";
-  const [redirect, setRedirect] = useSearchParams();
+  const { redirect } = useParams();
 
   const loginTab = useRef(null);
   const registerTab = useRef(null);
@@ -81,12 +76,7 @@ function LoginSignUp() {
 
   useEffect(() => {
     if (isAuthenticated) {
-      console.log(redirect);
-      navigate(
-        redirect.toString().split("=")[1] !== undefined
-          ? `/${redirect.toString().split("=")[1]}`
-          : "/account"
-      );
+      navigate(redirect ? `/${redirect.toString().split("=")[1]}` : "/account");
     }
   }, [isAuthenticated, navigate, redirect]);
 
@@ -112,7 +102,13 @@ function LoginSignUp() {
       ) : (
         <>
           {error && (
-            <Alert message={error} type="error" clearErrors={clearErrors} />
+            <Alert
+              message={error}
+              type="error"
+              onClose={(e) => {
+                dispatch(userActions.clearErrors());
+              }}
+            />
           )}
           <div className="LoginSignUpContainer">
             <div className="LoginSignUpBox">

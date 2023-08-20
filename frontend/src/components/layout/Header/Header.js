@@ -8,7 +8,6 @@ const options = {
   logoWidth: window.innerWidth < 800 ? "5vmax" : "20vmax",
   navColor1: "white",
   logoHoverSize: "5px",
-  // logoHoverColor: "#eb4034",
   link1Text: "Home",
   link2Text: "Products",
   link3Text: "Contact",
@@ -37,7 +36,7 @@ const options = {
 };
 
 function Header() {
-  return <ReactNavbar {...options} ProfileIconElement={<div>yo</div>} />;
+  return <ReactNavbar {...options} ProfileIconElement={<div></div>} />;
 }
 
 export default Header;

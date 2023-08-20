@@ -1,5 +1,11 @@
 import axios from "axios";
-import { forgotPasswordActions, userActions } from "../reducers/user-slice";
+import {
+  allUsersActions,
+  forgotPasswordActions,
+  updateDeleteUserActions,
+  userActions,
+  userDetailsActions,
+} from "../reducers/user-slice";
 
 // Login User
 export const login = (email, password) => {
@@ -57,7 +63,7 @@ export const loadUser = () => {
     try {
       dispatch(userActions.loadUserRequest());
 
-      const { data } = await axios.get(`api/v1/me`);
+      const { data } = await axios.get(`/api/v1/me`);
       dispatch(userActions.loadUserSuccess({ user: data.user }));
     } catch (error) {
       dispatch(
@@ -71,7 +77,7 @@ export const loadUser = () => {
 export const logout = () => {
   return async (dispatch) => {
     try {
-      await axios.get(`api/v1/logout`);
+      await axios.get(`/api/v1/logout`);
       dispatch(userActions.logoutUserSuccess());
     } catch (error) {
       dispatch(
@@ -174,7 +180,7 @@ export const resetPassword = (token, passwords) => {
       const config = { headers: { "Content-Type": "application/json" } };
 
       const { data } = await axios.put(
-        `api/v1/password/reset/${token}`,
+        `/api/v1/password/reset/${token}`,
         passwords,
         config
       );
@@ -192,9 +198,83 @@ export const resetPassword = (token, passwords) => {
   };
 };
 
-// Clear Errors
-export const clearErrors = () => {
+// Get All Users --Admin
+export const getAllUsers = () => async (dispatch) => {
+  try {
+    dispatch(allUsersActions.allUsersRequest());
+    const { data } = await axios.get(`/api/v1/admin/users`);
+
+    dispatch(allUsersActions.allUsersSuccess({ users: data.users }));
+  } catch (error) {
+    dispatch(
+      allUsersActions.allUsersFail({ error: error.response.data.message })
+    );
+  }
+};
+
+// Get Users Details --Admin
+export const getUserDetails = (id) => async (dispatch) => {
+  try {
+    dispatch(userDetailsActions.userDetailsRequest());
+    const { data } = await axios.get(`/api/v1/admin/user/${id}`);
+
+    dispatch(userDetailsActions.userDetailsSuccess({ user: data.user }));
+  } catch (error) {
+    dispatch(
+      userDetailsActions.userDetailsFail({ error: error.response.data.message })
+    );
+  }
+};
+
+// Update User --Admin
+export const updateUser = (id, userData) => {
   return async (dispatch) => {
-    dispatch(userActions.clearErrors());
+    try {
+      dispatch(updateDeleteUserActions.updateDeleteUserRequest());
+
+      const config = {
+        headers: { "Content-Type": "application/json" },
+      };
+
+      const { data } = await axios.put(
+        `/api/v1/admin/user/${id}`,
+        userData,
+        config
+      );
+
+      dispatch(
+        updateDeleteUserActions.updateUserSuccess({ success: data.success })
+      );
+    } catch (error) {
+      dispatch(
+        updateDeleteUserActions.updateDeleteUserFail({
+          error: error.response.data.message,
+        })
+      );
+    }
+  };
+};
+
+// Delete User --Admin
+export const deleteUser = (id) => {
+  return async (dispatch) => {
+    try {
+      dispatch(updateDeleteUserActions.updateDeleteUserRequest());
+
+      const { data } = await axios.delete(`/api/v1/admin/user/${id}`);
+
+      dispatch(
+        updateDeleteUserActions.deleteUserSuccess({
+          success: data.success,
+          message: data.message,
+        })
+      );
+    } catch (error) {
+      dispatch(
+        updateDeleteUserActions.updateDeleteUserFail({
+          error: error.response.data.message,
+        })
+      );
+    }
   };
 };

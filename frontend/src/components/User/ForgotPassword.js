@@ -2,11 +2,12 @@ import React, { useState } from "react";
 import Loader from "../layout/Loader/Loader";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import { useDispatch, useSelector } from "react-redux";
-import { clearErrors, forgotPassword } from "../../store/actions/user-actions";
+import { forgotPassword } from "../../store/actions/user-actions";
 import MetaData from "../layout/MetaData";
 import Alert from "../Alert/Alert";
 
 import "./ForgotPassword.css";
+import { forgotPasswordActions } from "../../store/reducers/user-slice";
 
 function ForgotPassword() {
   const dispatch = useDispatch();
@@ -33,9 +34,23 @@ function ForgotPassword() {
       ) : (
         <>
           {message && (
-            <Alert type="success" message={message} clearErrors={clearErrors} />
+            <Alert
+              type="success"
+              message={message}
+              onClose={(e) => {
+                dispatch(forgotPasswordActions.forgotPasswordReset());
+              }}
+            />
           )}
-          {error && <Alert type="error" message={error} />}
+          {error && (
+            <Alert
+              type="error"
+              message={error}
+              onClose={(e) => {
+                dispatch(forgotPasswordActions.clearErrors());
+              }}
+            />
+          )}
           <MetaData title="Forgot Password" />
           <div className="forgotPasswordContainer">
             <div className="forgotPasswordBox">

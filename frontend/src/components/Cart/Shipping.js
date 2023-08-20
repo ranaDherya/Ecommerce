@@ -40,7 +40,7 @@ function Shipping() {
     e.preventDefault();
 
     if (phoneNo.length < 10 || phoneNo.length > 10) {
-      setErr("      Phone Number should be 10 digits long.");
+      setErr("Error: Phone Number should be 10 digits long.at");
       return;
     }
     dispatch(
@@ -59,7 +59,15 @@ function Shipping() {
   return (
     <>
       {" "}
-      {err && <Alert type="error" message={err} clearErrors={clearErr} />}
+      {err && (
+        <Alert
+          type="error"
+          message={err}
+          onClose={(e) => {
+            clearErr();
+          }}
+        />
+      )}
       <MetaData title="Shipping Details" />
       <CheckoutStep activeStep={0} />
       <div className="shippingContainer">

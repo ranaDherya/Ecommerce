@@ -3,7 +3,7 @@ import CheckoutStep from "./CheckoutStep";
 import { useSelector, useDispatch } from "react-redux";
 import MetaData from "../layout/MetaData";
 import { Alert, Typography } from "@mui/material";
-import { createOrder, clearErrors } from "../../store/actions/newOrder-actions";
+import { createOrder } from "../../store/actions/order-actions";
 import {
   CardNumberElement,
   CardCvcElement,
@@ -16,6 +16,7 @@ import { CreditCard, Event, VpnKey } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 
 import "./Payment.css";
+import { newOrderActions } from "../../store/reducers/order-slice";
 
 function Payment() {
   const orderInfo = JSON.parse(sessionStorage.getItem("orderInfo"));
@@ -103,7 +104,7 @@ function Payment() {
 
           navigate("/success");
         } else {
-          setErr("      There is some issue while processing payment.");
+          setErr("Error: There is some issue while processing payment.at");
         }
       }
     } catch (error) {
@@ -113,7 +114,16 @@ function Payment() {
   };
   return (
     <>
-      {err && <Alert type="error" message={err} clearErrors={clearErrors} />}
+      {err && (
+        <Alert
+          type="error"
+          message={err}
+          onClose={(e) => {
+            dispatch(newOrderActions.clearErrors());
+            setErr();
+          }}
+        />
+      )}
       <MetaData title="Payment" />
       <CheckoutStep activeStep={2} />
       <div className="paymentContainer">

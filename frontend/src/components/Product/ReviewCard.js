@@ -1,22 +1,36 @@
-import React from "react";
-import ReactStars from "react-rating-stars-component";
+import React, { useEffect, useState } from "react";
+import { Rating } from "@mui/material";
+import axios from "axios";
 
 function ReviewCard(props) {
   const options = {
-    edit: false,
-    color: "rgba(20, 20, 20, 0.1)",
-    activeColor: "tomato",
+    size: "large",
     value: props.review.rating,
-    size: window.innerWidth < 600 ? 21 : 40,
-    isHalf: true,
+    readOnly: true,
+    precision: 0.5,
   };
+
+  let [avatar, setAvatar] = useState(
+    "https://res.cloudinary.com/dmnjtpuzu/image/upload/v1686561110/Ecommerce/avatars/default_avatar_ombzaz.png"
+  );
+
+  const getUser = async () => {
+    const { data } = await axios.get(
+      `/api/v1/userDetails/${props.review.user}`
+    );
+    setAvatar(data.user.avatar.url);
+  };
+
+  useEffect(() => {
+    getUser();
+  });
 
   return (
     <div className="reviewCard">
-      <img src="/Images/paddy.png" alt="User" />
+      <img src={avatar} alt="User" />
       <p>{props.review.name}</p>
-      <ReactStars {...options} />
-      <span>{props.review.comment}</span>
+      <Rating {...options} />
+      <span className="reviewCard-span">{props.review.comment}</span>
     </div>
   );
 }

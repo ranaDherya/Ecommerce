@@ -1,13 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { clearErrors, updatePassword } from "../../store/actions/user-actions";
+import { updatePassword } from "../../store/actions/user-actions";
 import { userActions } from "../../store/reducers/user-slice";
-
 import MetaData from "../layout/MetaData";
-
 import { LockOpen, Lock, VpnKey } from "@mui/icons-material";
-
 import Alert from "../Alert/Alert";
 import Loader from "../layout/Loader/Loader";
 
@@ -35,28 +32,6 @@ function UpdatePassword() {
     dispatch(updatePassword(myForm));
   };
 
-  const [alert, setAlert] = useState(<></>);
-
-  useEffect(() => {
-    if (error) {
-      console.log(error);
-      setAlert(
-        <Alert message={error} type="error" clearErrors={clearErrors} />
-      );
-    }
-    if (isUpdated) {
-      setAlert(
-        <Alert
-          message="Password Successfully Updated"
-          type="success"
-          clearErrors={clearErrors}
-        />
-      );
-      navigate("/account");
-      dispatch(userActions.updatePasswordReset());
-    }
-  }, [dispatch, error, isUpdated, navigate]);
-
   return (
     <>
       {loading ? (
@@ -64,7 +39,26 @@ function UpdatePassword() {
       ) : (
         <>
           <MetaData title="Change Password" />
-          {alert}
+          {error && (
+            <Alert
+              message={error}
+              type="error"
+              onClose={(e) => {
+                dispatch(userActions.clearErrors());
+              }}
+            />
+          )}
+
+          {isUpdated && (
+            <Alert
+              message="Password Successfully Updated."
+              type="success"
+              onClose={(e) => {
+                dispatch(userActions.updatePasswordReset());
+                navigate("/account");
+              }}
+            />
+          )}
           <div className="updatePasswordContainer">
             <div className="updatePasswordBox">
               <h2 className="updatePasswordHeading">Update Password</h2>

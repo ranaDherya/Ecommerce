@@ -55,6 +55,11 @@
     transition: all 0.5s;
     outline: none;
   }
+
+  .paymentFormBtn:disabled,
+  .paymentFormBtn[disabled] {
+    cursor: not-allowed;
+  }
   
   .paymentFormBtn:hover {
     background-color: rgb(179, 66, 46);

@@ -1,9 +1,30 @@
 import { configureStore } from "@reduxjs/toolkit";
 
-import { productSlice, productDetailSlice } from "./reducers/product-slice";
-import { userSlice, forgotPasswordSlice } from "./reducers/user-slice";
+import {
+  productSlice,
+  productDetailSlice,
+  newReviewSlice,
+  newProductSlice,
+  deleteProductSlice,
+  updateProductSlice,
+  productReviewsSlice,
+  deleteReviewSlice,
+} from "./reducers/product-slice";
+import {
+  userSlice,
+  forgotPasswordSlice,
+  allUsersSlice,
+  updateDeleteUserSlice,
+  userDetailsSlice,
+} from "./reducers/user-slice";
 import { cartSlice } from "./reducers/cart-slice";
-import { newOrderSlice } from "./reducers/newOrder-slice";
+import {
+  allOrdersSlice,
+  myOrdersSlice,
+  newOrderSlice,
+  orderDetailsSlice,
+  orderSlice,
+} from "./reducers/order-slice";
 
 const store = configureStore({
   reducer: {
@@ -13,6 +34,19 @@ const store = configureStore({
     forgotPassword: forgotPasswordSlice.reducer,
     cart: cartSlice.reducer,
     newOrder: newOrderSlice.reducer,
+    myOrders: myOrdersSlice.reducer,
+    orderDetails: orderDetailsSlice.reducer,
+    newReview: newReviewSlice.reducer,
+    allUsers: allUsersSlice.reducer,
+    newProduct: newProductSlice.reducer,
+    deleteProduct: deleteProductSlice.reducer,
+    allOrders: allOrdersSlice.reducer,
+    updateProduct: updateProductSlice.reducer,
+    order: orderSlice.reducer,
+    updateDeleteUser: updateDeleteUserSlice.reducer,
+    userDetails: userDetailsSlice.reducer,
+    productReviews: productReviewsSlice.reducer,
+    deleteReview: deleteReviewSlice.reducer,
   },
   devTools: true,
 });

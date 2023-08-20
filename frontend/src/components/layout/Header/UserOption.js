@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Alert from "../../Alert/Alert";
 import { logout } from "../../../store/actions/user-actions";
+import { userActions } from "../../../store/reducers/user-slice";
 
 import "./Header.css";
 
@@ -45,7 +46,7 @@ function UserOption() {
 
   const navigate = useNavigate();
   function dashboard() {
-    navigate("/dashboard");
+    navigate("/admin/dashboard");
   }
 
   function orders() {
@@ -61,13 +62,23 @@ function UserOption() {
   }
 
   const dispatch = useDispatch();
+  const [logoutSuccess, setLogoutSuccess] = useState(false);
   function logoutUser() {
     dispatch(logout());
-    <Alert type="success" message="Logout Successfully" />;
   }
 
   return (
     <>
+      {logoutSuccess && (
+        <Alert
+          type="success"
+          message="Logout Successfully"
+          onClose={(e) => {
+            dispatch(userActions.clearErrors());
+            setLogoutSuccess(false);
+          }}
+        />
+      )}
       <Backdrop open={open} style={{ zIndex: "10" }} />
       <SpeedDial
         ariaLabel="SpeedDial tooltip example"

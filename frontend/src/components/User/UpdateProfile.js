@@ -1,20 +1,11 @@
 import React, { useEffect, useState } from "react";
-
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import FaceIcon from "@mui/icons-material/Face";
-
 import { useNavigate } from "react-router-dom";
-
 import { useDispatch, useSelector } from "react-redux";
-import {
-  clearErrors,
-  loadUser,
-  updateProfile,
-} from "../../store/actions/user-actions";
+import { updateProfile } from "../../store/actions/user-actions";
 import { userActions } from "../../store/reducers/user-slice";
-
 import MetaData from "../layout/MetaData";
-
 import Alert from "../Alert/Alert";
 import Loader from "../layout/Loader/Loader";
 
@@ -22,7 +13,6 @@ import "./UpdateProfile.css";
 
 function UpdateProfile() {
   const navigate = useNavigate();
-
   const dispatch = useDispatch();
   const { user, isUpdated, loading, error } = useSelector(
     (state) => state.user
@@ -58,25 +48,13 @@ function UpdateProfile() {
     reader.readAsDataURL(e.target.files[0]);
   };
 
-  const [alert, setAlert] = useState(<></>);
   useEffect(() => {
     if (user) {
       setName(user.name);
       setEmail(user.email);
       setAvatarPreview(user.avatar.url);
     }
-    if (error) {
-      setAlert(
-        <Alert message={error} type="error" clearErrors={clearErrors} />
-      );
-    }
-    if (isUpdated) {
-      setAlert(<Alert message="Profile Updated Successfully" type="success" />);
-      // dispatch(loadUser());
-      navigate("/account");
-      dispatch(userActions.updateProfileReset());
-    }
-  }, [user, isUpdated, error, dispatch, navigate]);
+  }, [user]);
 
   return (
     <>
@@ -84,8 +62,26 @@ function UpdateProfile() {
         <Loader />
       ) : (
         <>
+          {error && (
+            <Alert
+              type="error"
+              message={error}
+              onClose={(e) => {
+                dispatch(userActions.clearErrors());
+              }}
+            />
+          )}
+          {isUpdated && (
+            <Alert
+              type="success"
+              message="Profile Updated Successfully."
+              onClose={(e) => {
+                dispatch(userActions.updateProfileReset());
+                navigate("/account");
+              }}
+            />
+          )}
           <MetaData title="Update Profile" />
-          {alert}
           <div className="updateProfileContainer">
             <div className="updateProfileBox">
               <h2 className="updateProfileHeading">Update Profile</h2>

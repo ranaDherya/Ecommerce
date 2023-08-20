@@ -63,7 +63,7 @@ function ConfirmOrder() {
             <div className="confirmCartItemsContainer">
               {cartItems &&
                 cartItems.map((item) => (
-                  <div>
+                  <div key={item.product}>
                     <img src={item.image} alt="Product" />
                     <Link to={`/product/${item.product}`}>
                       {item.name}

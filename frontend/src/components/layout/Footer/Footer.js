@@ -1,8 +1,5 @@
 import React from "react";
 
-// import playStore from "../../../images/playstore.png";
-// import appStore from "../../../images/Appstore.png";
-
 import "./Footer.css";
 
 function Footer() {
@@ -11,17 +8,10 @@ function Footer() {
       <div className="leftFooter"></div>
 
       <div className="midFooter">
-        <h1>ECOMMERCE.</h1>
-        <p>High Quality is our first priority</p>
+        <h1>TRIKUTA AGRI SEEDS</h1>
+        <p>Plant good seeds today</p>
 
         <p>Copyrights 2021 &copy; ranaDherya</p>
-      </div>
-
-      <div className="rightFooter">
-        <h4>Follow Us</h4>
-        <a href="http://instagram.com/rana_Dherya">Instagram</a>
-        <a href="http://youtube.com/6packprogramemr">Youtube</a>
-        <a href="http://instagram.com/meabhisingh">Facebook</a>
       </div>
     </footer>
   );
