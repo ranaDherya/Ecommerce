@@ -7,7 +7,7 @@
         "test": "echo \"Error: no test specified\" && exit 1",
         "start": "node ./backend/server.js",
         "dev": "nodemon ./backend/server.js",
-        "build": "npm install --prefix ./frontend && npm install --prefix ./backend",
+        "build": "npm install --prefix --force ./frontend && npm install --prefix --force ./backend",
         "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false && npm run build --prefix frontend"
     },
     "author": "ranaDherya",
