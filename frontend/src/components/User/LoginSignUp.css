@@ -1,13 +1,13 @@
 .LoginSignUpContainer {
     width: 100vw;
-    height: 100vh;
+    height: 90vh;
     max-width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     background-color: rgb(231, 231, 231);
     position: fixed;
-    top: 0%;
+    top: 10vh;
     left: 0;
   }
   
