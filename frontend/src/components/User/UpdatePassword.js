@@ -15,6 +15,7 @@ function UpdatePassword() {
   const navigate = useNavigate();
 
   const { error, isUpdated, loading } = useSelector((state) => state.user);
+  const [misMatchError, setMisMatchError] = useState();
 
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
@@ -23,13 +24,19 @@ function UpdatePassword() {
   const updatePasswordSubmit = (e) => {
     e.preventDefault();
 
-    const myForm = new FormData();
+    if (newPassword !== confirmPassword) {
+      setMisMatchError(
+        "Error: New Password and Confirm New Password Field doesnot match at"
+      );
+    } else {
+      const myForm = new FormData();
 
-    myForm.set("oldPassword", oldPassword);
-    myForm.set("newPassword", newPassword);
-    myForm.set("confirmPassword", confirmPassword);
+      myForm.set("oldPassword", oldPassword);
+      myForm.set("newPassword", newPassword);
+      myForm.set("confirmPassword", confirmPassword);
 
-    dispatch(updatePassword(myForm));
+      dispatch(updatePassword(myForm));
+    }
   };
 
   return (
@@ -45,6 +52,16 @@ function UpdatePassword() {
               type="error"
               onClose={(e) => {
                 dispatch(userActions.clearErrors());
+              }}
+            />
+          )}
+
+          {misMatchError && (
+            <Alert
+              message={misMatchError}
+              type="error"
+              onClose={(e) => {
+                setMisMatchError();
               }}
             />
           )}

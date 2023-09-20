@@ -1,6 +1,6 @@
 .ProductDetails {
     display: flex;
-    width: 100vw;
+    width: 100vw - calc(2px);
     padding: 7vmax;
     box-sizing: border-box;
 }

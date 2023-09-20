@@ -1,31 +1,29 @@
 const { MailtrapClient } = require("mailtrap");
+const nodemailer = require("nodemailer");
+const ErrorHandler = require("./errorhandler");
 
 const sendEmail = async (options) => {
-  const TOKEN = process.env.SMTP_PASSWORD;
-  const ENDPOINT = "https://send.api.mailtrap.io/";
+  try {
+    const transporter = nodemailer.createTransport({
+      host: "sandbox.smtp.mailtrap.io",
+      port: 465,
+      secure: true,
+      auth: {
+        user: process.env.SMTP_EMAIL,
+        pass: process.env.SMTP_PASSWORD,
+      },
+    });
 
-  const client = new MailtrapClient({ endpoint: ENDPOINT, token: TOKEN });
-
-  const sender = {
-    email: process.env.SMTP_EMAIL,
-    name: "Trikuta Seeds",
-  };
-
-  const recipients = [
-    {
-      email: options.email,
-    },
-  ];
-
-  client
-    .send({
-      from: sender,
-      to: recipients,
+    await transporter.sendMail({
+      from: process.env.SMTP_EMAIL,
+      to: options.email,
       subject: options.subject,
       text: options.message,
-      category: "Password Recovery",
-    })
-    .then(console.log, console.error);
+      html: "<b>Hi</b>",
+    });
+  } catch (e) {
+    return new ErrorHandler(e.stack, 404);
+  }
 };
 
 module.exports = sendEmail;

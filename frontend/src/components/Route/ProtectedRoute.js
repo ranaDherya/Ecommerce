@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 import { loadUser } from "../../store/actions/user-actions";
 
-function ProtectedRoute({ element, isSignedIn }) {
+function ProtectedRoute({ element }) {
   const dispatch = useDispatch();
   const { isAuthenticated } = useSelector((state) => state.user);
   const [loaded, setLoaded] = useState(false);
@@ -12,13 +12,16 @@ function ProtectedRoute({ element, isSignedIn }) {
     setLoaded(true);
   };
   useEffect(() => {
+    if (isAuthenticated) setLoaded(true);
     !isAuthenticated && userLoader();
-  });
-  if (loaded && isSignedIn === false) {
-    setLoaded(false);
+  }, [isAuthenticated]);
+
+  if (loaded && !isAuthenticated) {
     return <Navigate to="/login" />;
   }
-  return element;
+  if (loaded && isAuthenticated) {
+    return element;
+  }
 }
 
 export default ProtectedRoute;

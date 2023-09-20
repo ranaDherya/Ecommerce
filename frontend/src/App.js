@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import webfont from "webfontloader";
@@ -23,7 +23,6 @@ import ProductReviews from "./components/Admin/ProductReviews";
 import Contact from "./components/layout/Contact/Contact";
 import About from "./components/layout/About/About";
 import Payment from "./components/Cart/Payment";
-import UserOption from "./components/layout/Header/UserOption";
 import Profile from "./components/User/Profile";
 import ProtectedRoute from "./components/Route/ProtectedRoute";
 import UpdateProfile from "./components/User/UpdateProfile";
@@ -41,14 +40,13 @@ import Products from "./components/Product/Products";
 import Header from "./components/layout/Header/Header";
 import Footer from "./components/layout/Footer/Footer";
 
-import "./App.css";
 import { loadUser } from "./store/actions/user-actions";
 import NotFound from "./components/layout/Not Found/NotFound";
 
+import "./App.css";
+
 function App() {
   const dispatch = useDispatch();
-  const { isAuthenticated } = useSelector((state) => state.user);
-
   const [stripeApiKey, setStripeApiKey] = useState();
 
   async function getStripeApiKey() {
@@ -73,7 +71,7 @@ function App() {
     <Router>
       <Header />
 
-      {isAuthenticated && <UserOption />}
+      {/* {isAuthenticated && <UserOption />} */}
 
       <Routes>
         <Route path="/" element={<Home />} />

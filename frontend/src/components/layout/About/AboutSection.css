@@ -81,14 +81,6 @@
     font-size: 4vmax;
   }
   
-  .youtubeSvgIcon {
-    color: tomato;
-  }
-  
-  .instagramSvgIcon {
-    color: rgb(144, 81, 202);
-  }
-  
   @media screen and (max-width: 600px) {
     .aboutSectionContainer > div {
       display: block;

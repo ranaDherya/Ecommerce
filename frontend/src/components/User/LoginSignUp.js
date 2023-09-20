@@ -35,14 +35,22 @@ function LoginSignUp() {
 
   const { name, email, password } = user;
 
-  const [avatar, setAvatar] = useState();
+  const [avatar, setAvatar] = useState("");
   const [avatarPreview, setAvatarPreview] = useState(
     "https://res.cloudinary.com/dmnjtpuzu/image/upload/v1686561110/Ecommerce/avatars/default_avatar_ombzaz.png"
   );
 
   const loginSubmitHandler = (event) => {
     event.preventDefault();
-    dispatch(login(loginEmail, loginPassword));
+    let lowerCaseEmail = "";
+    for (let i = 0; i < loginEmail.length; i++) {
+      if (loginEmail[i] <= 90 && loginEmail[i] >= 65) {
+        lowerCaseEmail += loginEmail[i] + 32;
+      } else {
+        lowerCaseEmail += loginEmail[i];
+      }
+    }
+    dispatch(login(lowerCaseEmail, loginPassword));
   };
 
   const registerSubmitHandler = (event) => {
@@ -51,7 +59,15 @@ function LoginSignUp() {
     const myForm = new FormData();
 
     myForm.set("name", name);
-    myForm.set("email", email);
+    let lowerCaseEmail = "";
+    for (let i = 0; i < email.length; i++) {
+      if (email[i] <= 90 && email[i] >= 65) {
+        lowerCaseEmail += email[i] + 32;
+      } else {
+        lowerCaseEmail += email[i];
+      }
+    }
+    myForm.set("email", lowerCaseEmail);
     myForm.set("password", password);
     myForm.set("avatar", avatar);
     dispatch(register(myForm));

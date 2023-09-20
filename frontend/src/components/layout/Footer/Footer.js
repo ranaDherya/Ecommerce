@@ -10,8 +10,6 @@ function Footer() {
       <div className="midFooter">
         <h1>TRIKUTA AGRI SEEDS</h1>
         <p>Plant good seeds today</p>
-
-        <p>Copyrights 2021 &copy; ranaDherya</p>
       </div>
     </footer>
   );

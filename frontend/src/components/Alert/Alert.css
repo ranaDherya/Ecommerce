@@ -2,7 +2,6 @@
     padding: 1rem 1rem;
     border: 1px solid transparent;
     border-radius: 0.25rem;
-    top: 1px;
     position:fixed;
     margin-left: auto;
     margin-right: auto;
@@ -11,6 +10,7 @@
     text-align: center;
     width: 16vmax;
     z-index: 100;
+    bottom: 3vh;
   }
   .error {
     color: #842029;

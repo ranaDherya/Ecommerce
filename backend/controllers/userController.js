@@ -8,22 +8,29 @@ const cloudinary = require("cloudinary");
 
 // Register a User
 exports.registerUser = catchAsyncErrors(async (req, res, next) => {
-  const myCloud = await cloudinary.v2.uploader.upload(req.body.avatar, {
-    folder: "Ecommerce/avatars",
-    width: 150,
-    crop: "scale",
-  });
-
+  let avatar = {};
+  if (req.body.avatar !== "") {
+    const myCloud = await cloudinary.v2.uploader.upload(req.body.avatar, {
+      folder: "Ecommerce/avatars",
+      width: 150,
+      crop: "scale",
+    });
+    avatar = {
+      public_id: myCloud.public_id,
+      url: myCloud.secure_url,
+    };
+  } else {
+    avatar = {
+      public_id: "default_avatar_ombzaz",
+      url: "https://res.cloudinary.com/dmnjtpuzu/image/upload/v1686561110/Ecommerce/avatars/default_avatar_ombzaz.png",
+    };
+  }
   const { name, email, password } = req.body;
-
   const user = await User.create({
     name,
     email,
     password,
-    avatar: {
-      public_id: myCloud.public_id,
-      url: myCloud.secure_url,
-    },
+    avatar,
   });
 
   sendToken(user, 201, res);
@@ -178,11 +185,25 @@ exports.updateUserProfile = catchAsyncErrors(async (req, res, next) => {
     email: req.body.email,
   };
 
+  let user = await User.findById(req.user.id);
+  if (newUserData.name === "") {
+    newUserData.name = user.name;
+  }
+  if (newUserData.email === "") {
+    newUserData.email = user.email;
+  }
+
+  if (req.body.avatar === null) {
+    newUserData.avatar = user.avatar;
+  }
+
   if (req.body.avatar !== "") {
-    const user = await User.findById(req.user.id);
+    // const user = await User.findById(req.user.id);
 
     const imageId = user.avatar.public_id;
-    await cloudinary.v2.uploader.destroy(imageId);
+    if (imageId !== "default_avatar_ombzaz") {
+      await cloudinary.v2.uploader.destroy(imageId);
+    }
 
     const myCloud = await cloudinary.v2.uploader.upload(req.body.avatar, {
       folder: "Ecommerce/avatars",
@@ -196,7 +217,7 @@ exports.updateUserProfile = catchAsyncErrors(async (req, res, next) => {
     };
   }
 
-  const user = await User.findByIdAndUpdate(req.user.id, newUserData, {
+  user = await User.findByIdAndUpdate(req.user.id, newUserData, {
     new: true,
     runValidators: true,
   });
@@ -261,7 +282,9 @@ exports.deleteUser = catchAsyncErrors(async (req, res, next) => {
   }
 
   const imageId = user.avatar.public_id;
-  await cloudinary.v2.uploader.destroy(imageId);
+  if (imageId !== "default_avatar_ombzaz") {
+    await cloudinary.v2.uploader.destroy(imageId);
+  }
 
   await user.remove();
 

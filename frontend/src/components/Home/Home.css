@@ -1,5 +1,5 @@
 .banner {
-    background-image: url("../../images/cover.jpg");
+    background-image: url("../../images/cover-new.jpg");
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -10,11 +10,11 @@
     align-items: center;
     justify-content: center;
     color: white;
+    margin-top: -10vh;
   }
   
   .banner > h1 {
     margin: 5vmax;
-  
     font: 600 2.5vmax "Roboto";
   }
   
@@ -116,10 +116,22 @@
   
     transform: translateY(-1vmax);
   }
+
+  @media screen and (max-width: 835px) {
+    .banner {
+      height: 100vmin;
+      margin-top: -8vh;
+    }
+  }
   
   @media screen and (max-width: 600px) {
     .productCard > p {
       font-size: 1.7vmax;
+    }
+
+    .banner {
+      height: 100vmin;
+      margin-top: -8vh;
     }
   
     .productCard > div {

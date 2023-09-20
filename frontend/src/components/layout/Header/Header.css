@@ -1,7 +1,8 @@
 .speedDial {
-    position: fixed;
-    right: 3vmax;
-    top: 3vmax;
+    position: relative;
+    height: 3vmax;
+    width: 3vmax;
+    margin: auto;
 }
 
 .speedDialIcon {
@@ -9,3 +10,85 @@
     height: 56px;
     border-radius: 100%;
 }
+
+.header-container {
+    height: 10vh;
+}
+
+.main-header {
+    padding: 0 4.8rem;
+    height: 10rem;
+    /* background-color: tomato; */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+
+    
+}
+
+.main-header > img {
+    z-index: 1000;
+    color: black;
+    object-fit: contain;
+}
+
+.logo {
+    height: 3vmax;
+    margin-right: .7vmax;
+    object-fit: contain;
+}
+
+.cursor {
+    cursor:  pointer !important;
+}
+
+.navSearch {
+    height: 10vh;
+    min-width: 30vw;
+    max-width: 70vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    margin-left: 4vw;
+}
+
+.navSearch > input[type="text"] {
+    border: none;
+    padding: 1vmax 2vmax;
+    width: 80%;
+    outline: none;
+    border-radius: 0%;
+    font: 300 1.1vmax cursive;
+    box-sizing: border-box;
+    height: 5vh;
+}
+
+.navSearch > input[type="submit"] {
+    height: 5vh;
+    border-radius: 0;
+    background-color: tomato;
+    border: none;
+    padding: 1vmax;
+    width: 20%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font: 300 1.1vmax "Roboto";
+    cursor: pointer;
+    color: white;
+    transition: all 0.5s;
+}
+
+.navSearch > input[type="submit"]:hover {
+    background-color: rgb(25, 118, 210);
+    border: 1px solid white;
+}
+
+@media screen and (max-width: 899px) {
+    .header-container {
+        height: 8vh;
+    }
+  }

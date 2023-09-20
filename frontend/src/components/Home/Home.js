@@ -36,18 +36,20 @@ function Home() {
             />
           )}
           <div className="banner">
-            <p>Welcome to Trikuta Seeds</p>
+            <p>Welcome to Trikuta Agri Seeds</p>
             <h1>FIND AMAZING PRODUCTS BELOW</h1>
 
-            <a href="#container">
+            <a href="#homeHeading">
               <button>
                 Scroll <CgMouse />
               </button>
             </a>
           </div>
-          <h2 className="homeHeading">Featured Products</h2>
+          <h2 id="homeHeading" className="homeHeading">
+            Featured Products
+          </h2>
 
-          <div id="container" className="container">
+          <div className="container">
             {products &&
               products.map((product) => (
                 <ProductCard product={product} key={product._id} />

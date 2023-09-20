@@ -6,6 +6,10 @@
     place-items: center;
     background-color: white;
     position: fixed;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
   }
   
   .mailBtn {
@@ -21,6 +25,15 @@
     padding: 2vmax;
   }
   
+  .mob-no {
+    text-decoration: none;
+    cursor: url("https://img.icons8.com/color/48/000000/edit--v2.png"), pointer;
+    padding: 2vmax;
+    transform: translateX(-100vw);
+    animation: mailBtnAnimation 2s forwards;
+    font: 200 2vmax "Roboto" !important;
+  }
+
   @keyframes mailBtnAnimation {
     to {
       transform: translateX(0);

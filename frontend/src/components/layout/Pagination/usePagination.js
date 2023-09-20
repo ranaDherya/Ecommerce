@@ -16,7 +16,7 @@ function usePagination({
       /*
         Create an array of certain length and set the elements within it from
       start value to end value.
-    */
+      */
       let arr = [];
       for (let i = start; i <= end; i++) {
         arr.push(i);

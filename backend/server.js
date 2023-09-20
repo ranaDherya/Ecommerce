@@ -11,12 +11,15 @@ process.on("uncaughtException", (err) => {
   process.exit(1);
 });
 
+const dotenv = require("dotenv");
+dotenv.config({ path: path.resolve(__dirname, "./config/config.env") });
+
 // config
-if (process.env.NODE_ENV !== "PRODUCTION") {
-  require("dotenv").config({
-    path: path.resolve(__dirname, "./config/config.env"),
-  });
-}
+// if (process.env.NODE_ENV !== "PRODUCTION") {
+//   require("dotenv").config({
+//     path: path.resolve(__dirname, "./config/config.env"),
+//   });
+// }
 // Connecting to database
 connectDatabase();
 

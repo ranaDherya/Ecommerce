@@ -1,7 +1,6 @@
 import React from "react";
 import "./AboutSection.css";
 import { Button, Typography } from "@mui/material";
-import { YouTube, Instagram } from "@mui/icons-material";
 const About = () => {
   const visitInstagram = () => {
     window.location = "/";
@@ -17,8 +16,8 @@ const About = () => {
           <div>
             <img
               style={{
-                width: "10vmax",
-                height: "10vmax",
+                width: "15vmax",
+                height: "15vmax",
                 margin: "1.5vmax 0",
                 objectFit: "contain",
               }}
@@ -30,16 +29,6 @@ const About = () => {
               Visit Home
             </Button>
             <span>We are a company that sell seeds.</span>
-          </div>
-          <div className="aboutSectionContainer2">
-            <Typography component="h2">Our Brands</Typography>
-            <a href="/about" target="blank">
-              <YouTube className="youtubeSvgIcon" />
-            </a>
-
-            <a href="/about" target="blank">
-              <Instagram className="instagramSvgIcon" />
-            </a>
           </div>
         </div>
       </div>

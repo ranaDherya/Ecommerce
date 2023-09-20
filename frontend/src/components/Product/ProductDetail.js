@@ -30,10 +30,11 @@ function ProductDetail() {
   const [open, setOpen] = useState(false);
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
-
   const dispatch = useDispatch();
   const params = useParams();
   const { id } = params;
+
+  const [addedToCart, setAddedToCart] = useState(false);
 
   const increaseQuantity = () => {
     if (product.Stock <= quantity) return;
@@ -47,6 +48,7 @@ function ProductDetail() {
 
   const addToCartHandler = () => {
     dispatch(addItemToCart(id, quantity));
+    setAddedToCart(true);
   };
 
   const { loading, product, error } = useSelector(
@@ -115,6 +117,16 @@ function ProductDetail() {
               message="Review Submitted Successfully"
               onClose={(e) => {
                 dispatch(newReviewActions.newReviewReset());
+              }}
+            />
+          )}
+
+          {addedToCart && (
+            <Alert
+              message="Item Added to Cart."
+              type="success"
+              onClose={(e) => {
+                setAddedToCart(false);
               }}
             />
           )}

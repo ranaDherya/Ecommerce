@@ -24,7 +24,7 @@ export const userSlice = createSlice({
     loginFail(state, action) {
       state.loading = false;
       state.isAuthenticated = false;
-      state.user = null;
+      state.user = {};
       state.error = action.payload.error;
     },
 
@@ -42,7 +42,7 @@ export const userSlice = createSlice({
     registerFail(state, action) {
       state.loading = false;
       state.isAuthenticated = false;
-      state.user = null;
+      state.user = {};
       state.error = action.payload.error;
     },
 
@@ -60,7 +60,7 @@ export const userSlice = createSlice({
     loadUserFail(state, action) {
       state.loading = false;
       state.isAuthenticated = false;
-      state.user = null;
+      state.user = {};
       state.error = action.payload.error;
     },
 
