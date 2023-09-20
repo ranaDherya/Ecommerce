@@ -41,7 +41,7 @@ import Header from "./components/layout/Header/Header";
 import Footer from "./components/layout/Footer/Footer";
 
 import { loadUser } from "./store/actions/user-actions";
-import NotFound from "./components/layout/Not Found/NotFound";
+import NotFound from "./components/layout/NotFound/NotFound";
 
 import "./App.css";
 
@@ -70,8 +70,6 @@ function App() {
   return (
     <Router>
       <Header />
-
-      {/* {isAuthenticated && <UserOption />} */}
 
       <Routes>
         <Route path="/" element={<Home />} />

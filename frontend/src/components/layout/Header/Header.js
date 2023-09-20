@@ -17,6 +17,7 @@ import { useNavigate } from "react-router-dom";
 import { Dashboard, Person, ExitToApp, ListAlt } from "@mui/icons-material";
 
 import "./Header.css";
+import { userActions } from "../../../store/reducers/user-slice";
 
 function Header() {
   const [anchorElNav, setAnchorElNav] = useState(null);
@@ -283,6 +284,7 @@ function Header() {
                   textDecoration: "none",
                 }}
                 onClick={(e) => {
+                  dispatch(userActions.clickedOnLogin());
                   navButtonHandler("/login");
                 }}
               >

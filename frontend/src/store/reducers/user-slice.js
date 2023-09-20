@@ -8,6 +8,7 @@ export const userSlice = createSlice({
     isAuthenticated: false,
     error: null,
     isUpdated: false,
+    clickedLogin: false,
   },
   reducers: {
     loginRequest(state) {
@@ -112,6 +113,14 @@ export const userSlice = createSlice({
 
     updatePasswordReset(state) {
       state.isUpdated = false;
+    },
+
+    clickedOnLogin(state) {
+      state.clickedLogin = true;
+    },
+
+    resetClickedOnLogin(state) {
+      state.clickedLogin = false;
     },
 
     clearErrors(state, action) {

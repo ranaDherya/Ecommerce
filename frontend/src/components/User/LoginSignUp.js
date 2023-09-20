@@ -15,7 +15,7 @@ function LoginSignUp() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const { error, loading, isAuthenticated } = useSelector(
+  const { error, loading, isAuthenticated, clickedLogin } = useSelector(
     (state) => state.user
   );
   const { redirect } = useParams();
@@ -51,6 +51,7 @@ function LoginSignUp() {
       }
     }
     dispatch(login(lowerCaseEmail, loginPassword));
+    dispatch(userActions.resetClickedOnLogin());
   };
 
   const registerSubmitHandler = (event) => {
@@ -117,7 +118,7 @@ function LoginSignUp() {
         <Loader />
       ) : (
         <>
-          {error && (
+          {!clickedLogin && error && (
             <Alert
               message={error}
               type="error"
