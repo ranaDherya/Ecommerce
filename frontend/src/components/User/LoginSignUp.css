@@ -163,6 +163,7 @@
   @media screen and (max-width: 600px) {
     .LoginSignUpContainer {
       background-color: white;
+      top: 11vh;
     }
     .LoginSignUpBox {
       width: 100vw;
@@ -183,7 +184,7 @@
     .loginForm > div > input,
     .signUpForm > div > input {
       padding: 2.5vmax 5vmax;
-      font: 300 1.7vmax cursive;
+      font: 300 2.5vmax italic;
     }
   
     .loginForm > div > svg,

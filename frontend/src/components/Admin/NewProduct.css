@@ -111,14 +111,14 @@
       background-color: rgb(255, 255, 255);
     }
     .createProductForm {
-      padding: 5vmax;
+      padding: 3.5vmax;
     }
   
     .createProductForm > div > input,
     .createProductForm > div > select,
     .createProductForm > div > textarea {
       padding: 2.5vmax 5vmax;
-      font: 300 1.7vmax cursive;
+      font: 300 2vmax italic;
     }
   
     .createProductForm > div > svg {
@@ -132,7 +132,7 @@
   
     #createProductFormFile > input::file-selector-button {
       height: 7vh;
-      font: 400 1.8vmax cursive;
+      font: 400 1.8vmax italic;
     }
   
     #createProductBtn {

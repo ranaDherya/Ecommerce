@@ -53,7 +53,7 @@
     }
     .productReviewsForm > div > input {
       padding: 2.5vmax 5vmax;
-      font: 300 1.7vmax cursive;
+      font: 300 1.7vmax italic;
     }
   
     .productReviewsForm > div > svg {

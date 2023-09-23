@@ -37,3 +37,9 @@
   .MuiTypography-root {
     background-color: #fff !important;
   }
+
+  @media screen and (max-width: 600px) {
+    .sidebar > a > img {
+      width: 90vw;
+    }
+  }

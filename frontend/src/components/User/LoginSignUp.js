@@ -42,15 +42,8 @@ function LoginSignUp() {
 
   const loginSubmitHandler = (event) => {
     event.preventDefault();
-    let lowerCaseEmail = "";
-    for (let i = 0; i < loginEmail.length; i++) {
-      if (loginEmail[i] <= 90 && loginEmail[i] >= 65) {
-        lowerCaseEmail += loginEmail[i] + 32;
-      } else {
-        lowerCaseEmail += loginEmail[i];
-      }
-    }
-    dispatch(login(lowerCaseEmail, loginPassword));
+    
+    dispatch(login(loginEmail.toLowerCase(), loginPassword));
     dispatch(userActions.resetClickedOnLogin());
   };
 
@@ -60,15 +53,7 @@ function LoginSignUp() {
     const myForm = new FormData();
 
     myForm.set("name", name);
-    let lowerCaseEmail = "";
-    for (let i = 0; i < email.length; i++) {
-      if (email[i] <= 90 && email[i] >= 65) {
-        lowerCaseEmail += email[i] + 32;
-      } else {
-        lowerCaseEmail += email[i];
-      }
-    }
-    myForm.set("email", lowerCaseEmail);
+    myForm.set("email", email.toLowerCase());
     myForm.set("password", password);
     myForm.set("avatar", avatar);
     dispatch(register(myForm));

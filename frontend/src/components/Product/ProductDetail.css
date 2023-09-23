@@ -328,6 +328,10 @@
       .reviewCardComment {
         font: 300 5vw cursive;
       }
+      .reviewCard-span {
+        color: rgba(0,  0, 0, 0.445);
+        font: 300 2vmax cursive;
+    }
       .submitReview {
         font: 500 1.7vmax "Roboto";
         padding: 1.5vmax;

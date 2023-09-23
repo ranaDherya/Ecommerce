@@ -121,4 +121,8 @@
       padding: 1vmax;
       margin: 2vmax 0;
     }
+
+    .profileContainer > div:last-child > div > p {
+      font: 300 2vmax italic;
+    }
   }

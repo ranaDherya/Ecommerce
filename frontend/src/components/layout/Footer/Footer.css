@@ -10,7 +10,6 @@ footer {
   .leftFooter {
     width: 20%;
     display: flex;
-  
     flex-direction: column;
     align-items: center;
   }
@@ -32,7 +31,6 @@ footer {
   
   .midFooter {
     width: 60%;
-  
     text-align: center;
   }
   
@@ -42,14 +40,13 @@ footer {
     color: #eb4034;
   }
   .midFooter > p {
-    max-width: 60%;
+    max-width: 80%;
     font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
     margin: 1vmax auto;
   }
   
   .rightFooter {
     width: 20%;
-  
     display: flex;
     flex-direction: column;
     align-items: center;

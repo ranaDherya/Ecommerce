@@ -27,6 +27,10 @@
     font-size: 1.6vmax;
     color: rgba(0, 0, 0, 0.623);
   }
+
+  .orderstatusdetails {
+    margin-left: 2vmin;
+  }
   
   
   @media screen and (max-width: 600px) {
@@ -41,5 +45,9 @@
   
     .updateOrderForm > div > svg {
       font-size: 2.8vmax;
+    }
+
+    .orderstatusdetails {
+      margin-left: 2vmax;
     }
   }

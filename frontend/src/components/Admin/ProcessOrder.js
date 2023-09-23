@@ -118,6 +118,7 @@ function ProcessOrder() {
                   </div>
                 </div>
 
+                <div className="orderstatusdetails">
                 <Typography>Payment</Typography>
                 <div className="orderDetailsContainerBox">
                   <div>
@@ -155,6 +156,7 @@ function ProcessOrder() {
                       {order.orderStatus && order.orderStatus}
                     </p>
                   </div>
+                </div>
                 </div>
                 <div className="confirmCartItems">
                   <Typography>Your Order Items:</Typography>

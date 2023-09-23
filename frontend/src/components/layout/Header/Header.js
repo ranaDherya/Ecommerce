@@ -107,8 +107,8 @@ function Header() {
   const { isAuthenticated } = useSelector((state) => state.user);
 
   return (
-    <AppBar position="sticky" className="header-container">
-      <Container maxWidth="xl">
+    <AppBar position="sticky" >
+      <Container maxWidth="xl" className="header-container">
         <Toolbar disableGutters>
           <Typography
             className="cursor"
@@ -277,6 +277,29 @@ function Header() {
                 sx={{
                   mr: 2,
                   display: { xs: "none", md: "flex" },
+                  fontFamily: "monospace",
+                  fontWeight: 300,
+                  backgroundColor: "rgb(25, 118, 210) !important",
+                  color: "inherit",
+                  textDecoration: "none",
+                }}
+                onClick={(e) => {
+                  dispatch(userActions.clickedOnLogin());
+                  navButtonHandler("/login");
+                }}
+              >
+                Login/SignUp
+              </Typography>
+            )}
+            {!isAuthenticated && (
+              <Typography
+                className="cursor loginButtonSmallScreen"
+                variant="h6"
+                noWrap
+                component="a"
+                sx={{
+                  mr: 2,
+                  display: { xs: "flex", md: "none" },
                   fontFamily: "monospace",
                   fontWeight: 300,
                   backgroundColor: "rgb(25, 118, 210) !important",

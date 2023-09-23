@@ -87,8 +87,13 @@
     border: 1px solid white;
 }
 
+.loginButtonSmallScreen {
+    font-size: 1.5vmax !important;
+}
+
 @media screen and (max-width: 899px) {
     .header-container {
         height: 8vh;
+        width: 100vw;
     }
   }
